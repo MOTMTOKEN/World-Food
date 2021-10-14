@@ -34,6 +34,11 @@ import com.google.firebase.firestore.ktx.toObject
 import com.se.iths.app21.grupp1.myapplication.databinding.ActivityMapsBinding
 import java.util.*
 import kotlin.math.log
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
+
+
+
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener{
 
@@ -80,7 +85,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
+
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.place_menu, menu)
@@ -120,7 +129,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
 
         mMap.setOnMapLongClickListener(this)
 
-        mMap.setOnInfoWindowClickListener(this)
+
+        // vi måste på något sätt veta om den är sparad eller inte
+        /*
+        Om vi kan göra det så kan vi lägga till denna kod - amir.
+
+        mMap.setOnInfoWindowClickListener(OnInfoWindowClickListener {
+            val intent = Intent(this@MapsActivity, PlacesActivity::class.java)
+            startActivity(intent)
+        })
+
+        */
+
+        mMap.setOnInfoWindowClickListener (this)
         mMap.setOnMapClickListener(this)
 
         getData()
@@ -228,7 +249,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
         startActivity(intent)
     }
        }else{
-           Snackbar.make(binding.root, "Please first sign in ", Snackbar.LENGTH_INDEFINITE).setAction("Go to inloggning sida",){
+           Snackbar.make(binding.root, "Please first sign in ", Snackbar.LENGTH_INDEFINITE).setAction(
+               "Go to inloggning sida"
+           ){
                val intent = Intent(this, InloggningActivity::class.java)
                startActivity(intent)
            }.show()
