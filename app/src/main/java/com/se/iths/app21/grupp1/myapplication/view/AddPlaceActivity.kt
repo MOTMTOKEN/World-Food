@@ -1,16 +1,12 @@
-package com.se.iths.app21.grupp1.myapplication
+package com.se.iths.app21.grupp1.myapplication.view
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
-import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.se.iths.app21.grupp1.myapplication.databinding.ActivityAddPlaceBinding
 import java.util.*
@@ -69,7 +64,6 @@ class AddPlaceActivity : AppCompatActivity() {
     private fun savePlaces(){
 
         val places = hashMapOf<String, Any>()
-       // val rBar = findViewById<RatingBar>(R.id.rBar)
 
         if(auth.currentUser != null){
             places["userEmail"] = auth.currentUser!!.email!!
