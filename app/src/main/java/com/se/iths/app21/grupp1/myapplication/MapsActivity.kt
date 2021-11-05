@@ -112,6 +112,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
 
         recyclerView.adapter = this.adapter
 
+        recyclerView.setDivider(R.drawable.recycler_view_divider)
+
+
         val categoryFAB = binding.categoryFloatingActionButton
         val categoryRecyclerView = binding.recyclerView
 

@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="tangerine">#FA8128</color>
     <color name="grey">#676767</color>
+    <color name="light_grey">#cccccc</color>
+
 
 </resources>

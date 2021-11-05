@@ -7,7 +7,7 @@
     android:background="@drawable/background_color"
     tools:context=".AddPlaceActivity">
 
-    <EditText
+    <Button
         android:id="@+id/landText"
         android:layout_width="407dp"
         android:layout_height="54dp"
@@ -24,7 +24,10 @@
         app:layout_constraintBottom_toTopOf="@+id/beskrivningText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeNameText" />
+        app:layout_constraintTop_toBottomOf="@+id/placeNameText"
+        />
+
+
 
     <ImageButton
         android:id="@+id/selectImage"
@@ -109,4 +112,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rBar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="42dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintTop_toBottomOf="@+id/landText"
+
+        android:bottomRightRadius="7dp"
+        android:bottomLeftRadius="7dp"
+        android:topLeftRadius="7dp"
+        android:topRightRadius="7dp"
+
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

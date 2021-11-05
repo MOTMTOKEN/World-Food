@@ -12,12 +12,17 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -29,8 +34,10 @@ import java.util.*
 
 
 import com.google.android.gms.tasks.OnSuccessListener
-
-
+import kotlinx.android.synthetic.main.activity_maps.*
+import androidx.recyclerview.widget.DividerItemDecoration
+import kotlinx.android.synthetic.main.activity_add_place.*
+import java.security.AccessController.getContext
 
 
 class AddPlaceActivity : AppCompatActivity() {
@@ -66,6 +73,30 @@ class AddPlaceActivity : AppCompatActivity() {
         lat = intent.getDoubleExtra("lat",0.0)
         long = intent.getDoubleExtra("long", 0.0)
 
+        var flagImages = listOf<Image>(
+            Image("American", R.drawable.flag_usa),
+            Image("Asian", R.drawable.flag_asia_map),
+            Image("Dutch", R.drawable.flag_netherlands),
+            Image("French", R.drawable.flag_france),
+            Image("Italian", R.drawable.flag_italy),
+            Image("Spanish", R.drawable.flag_spain),
+            Image("Swedish", R.drawable.flag_sweden),
+            Image("Turkish", R.drawable.flag_turkey),
+
+
+
+
+            )
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter= CountrySelectAdapter(this, flagImages, landText, recyclerView)
+
+        recyclerView.setDivider(R.drawable.recycler_view_divider)
+
+
+
         registerLauncher()
 
 
@@ -76,11 +107,17 @@ class AddPlaceActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.landText.setOnClickListener {
+            recyclerView.isVisible = !recyclerView.isVisible
+        }
+
+
         binding.selectImage.setOnClickListener {
             givePermission()
         }
 
     }
+
 
     private fun savePlaces(){
 
@@ -107,6 +144,7 @@ class AddPlaceActivity : AppCompatActivity() {
                 }.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val downloadUri = task.result
+
                         places["userEmail"] = auth.currentUser!!.email!!
                         places["name"] = binding.placeNameText.text.toString()
                         places["land"] = binding.landText.text.toString()
