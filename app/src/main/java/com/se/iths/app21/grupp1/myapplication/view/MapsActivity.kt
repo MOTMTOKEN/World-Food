@@ -13,6 +13,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -41,6 +42,7 @@ import com.se.iths.app21.grupp1.myapplication.model.Places
 import com.se.iths.app21.grupp1.myapplication.R
 import com.se.iths.app21.grupp1.myapplication.databinding.ActivityMapsBinding
 import com.se.iths.app21.grupp1.myapplication.model.Place
+import com.se.iths.app21.grupp1.myapplication.model.setDivider
 import kotlinx.android.synthetic.main.activity_places.*
 import java.util.*
 
@@ -119,6 +121,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
         this.adapter = CuisinesRecycleAdapter(this)
 
         recyclerView.adapter = this.adapter
+        recyclerView.setDivider(R.drawable.recycler_view_divider)
+
 
         val categoryFAB = binding.categoryFloatingActionButton
         val categoryRecyclerView = binding.recyclerView
@@ -374,6 +378,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
     }
 
     private fun getData() {
+        mMap.clear()
+        adapter!!.addCuisine("All")
 
         directionOfPlaces = false
 
@@ -387,6 +393,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
                     if(!value.isEmpty){
                         val documents = value.documents
                         documents.forEach { it ->
+
                             val place = it.toObject(Places::class.java)
                             placeList.add(Places(place!!.id, place.name, place.land, place.beskrivning,place.lat, place.long, place.userEmail, place.image.toString()))
                             place.land?.let { adapter!!.addCuisine(it) }
@@ -415,6 +422,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
                     }
 
                 }else{
+
                     if(adapter!!.selectedCountries.isEmpty() || adapter!!.selectedCountries.contains(place.land)){
 
                         val marker = mMap.addMarker(MarkerOptions().position(LatLng(place.lat!!.toDouble(), place.long!!.toDouble())))
